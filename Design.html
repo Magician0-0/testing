@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Halloween</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+   body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #6b6b47;
+  color: white;
+  padding-top: 80px;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  backdrop-filter: blur(10px);
+  transition: opacity 0.6s, transform 0.6s ease-in-out;
+}
+
+.navbar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar .logo img {
+  margin-right: 10px;
+  height: 40px;
+  width: 40px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li {
+  margin: 0 15px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+}
+
+.navbar ul li a:hover {
+  text-decoration: underline;
+}
+
+.slideshow-container {
+  position: relative;
+  max-width: 100%;
+  margin: auto;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 1s, transform 1s ease-in-out;
+}
+
+.slideshow-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slides-wrapper {
+  display: flex;
+  transition: transform 0.8s ease-in-out;
+}
+
+.mySlides {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.mySlides img {
+  width: 50%;
+  height: auto;
+  border-radius: 100px;
+}
+
+.text {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 20px;
+  width: 45%;
+  margin-left: 30px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+}
+
+.text h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.btn {
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #e64a19;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  z-index: 100;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+@media (max-width: 768px) {
+  .mySlides {
+    flex-direction: column;
+  }
+
+  .mySlides img {
+    width: 100%;
+  }
+
+  .text {
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+  }
+}
+
+.category-section {
+  padding: 50px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s, transform 1s ease-in-out;
+}
+
+.category-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.category-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.category-item {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 30%;
+}
+
+.category-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.category-item h3 {
+  font-size: 24px;
+  padding: 10px;
+  margin: 0;
+  color: white;
+  background: none;
+}
+
+.category-item p {
+  font-size: 16px;
+  padding: 10px;
+  color: white;
+  background: none;
+}
+
+@media (max-width: 768px) {
+  .category-item {
+    width: 100%;
+  }
+}
+
+.image-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+  overflow-x: auto;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: opacity 1s, transform 1s ease-in-out;
+}
+
+.image-row.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.comment-container {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  overflow-y: auto;
+  max-height: 400px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  animation: fadeIn 1s ease-out;
+}
+
+.comment-container h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.comment-container p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.image-container {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  animation: scaleUp 1s ease-out;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #6b6b47;
+      color: white;
+    }
+
+    .image-grid {
+      padding: 50px;
+      text-align: center;
+      background-color: #333; 
+      opacity: 0; 
+      transform: translateY(50px); 
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .image-grid.visible {
+      opacity: 1;
+      transform: translateY(0); 
+    }
+
+    .image-grid h2 {
+      color: #ff5722;
+      margin-bottom: 40px;
+      font-size: 36px;
+      text-transform: uppercase;
+    }
+
+    .grid-item {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 1s ease, transform 1s ease;
+      border: 2px solid red; 
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      justify-items: center;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #222; 
+    }
+
+    .grid-item.visible {
+      opacity: 1;
+      transform: scale(1); 
+    }
+
+    .grid-item img {
+      width: 100%;        
+      height: 100%;       
+      object-fit: cover;  
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .grid-item img:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid-container {
+        grid-template-columns: 1fr; 
+      }
+    }
+
+@media (min-width: 768px) {
+  .grid-item {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-item {
+    width: 50%;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="navbar visible">
+    <div class="logo">
+      <img src="https://img.icons8.com/ios/452/halloween.png" alt="Halloween Logo"/>
+      Halloween
+    </div>
+    <ul>
+      <li><a href="./Design.html">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="./Animation.html">Animation Version</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="slideshow-container visible">
+    <div class="slides-wrapper">
+      <div class="mySlides">
+        <img src="https://www.w3schools.com/w3images/fjords.jpg" alt="Slide 1"/>
+        <div class="text">
+          <h1>Halloween Specials</h1>
+          <p>Celebrate the spooky season with our exclusive Halloween specials.</p>
+          <a href="#specials" class="btn">Explore Now</a>
+        </div>
+      </div>
+      <div class="mySlides">
+        <img src="https://www.w3schools.com/w3images/lights.jpg" alt="Slide 2"/>
+        <div class="text">
+          <h1>Spooky Nights</h1>
+          <p>Join us for a frightfully fun night with costumes, games, and more.</p>
+          <a href="#events" class="btn">Learn More</a>
+        </div>
+      </div>
+      <div class="mySlides">
+        <img src="https://www.w3schools.com/w3images/mountains.jpg" alt="Slide 3"/>
+        <div class="text">
+          <h1>Costume Ideas</h1>
+          <p>Find the perfect Halloween costume for yourself and your loved ones.</p>
+          <a href="#costumes" class="btn">Browse Costumes</a>
+        </div>
+      </div>
+    </div>
+    <a class="prev">&#10094;</a>
+    <a class="next">&#10095;</a>
+  </div>
+  <div class="category-section visible">
+    <h2>Featured Categories</h2>
+    <div class="category-container">
+      <div class="category-item">
+        <img src="https://www.w3schools.com/w3images/fjords.jpg" alt="Category 1"/>
+        <h3>Spooky Decor</h3>
+        <p>Decorate your home with eerie decorations for the season.</p>
+      </div>
+      <div class="category-item">
+        <img src="https://www.w3schools.com/w3images/lights.jpg" alt="Category 2"/>
+        <h3>Costumes</h3>
+        <p>Shop the best costumes for everyone in the family.</p>
+      </div>
+      <div class="category-item">
+        <img src="https://www.w3schools.com/w3images/mountains.jpg" alt="Category 3"/>
+        <h3>Party Ideas</h3>
+        <p>Throw an unforgettable Halloween party with our ideas and tips.</p>
+      </div>
+    </div>
+  </div>
+  <div class="image-row visible">
+    <div class="comment-container">
+      <h3>Customer Reviews</h3>
+      <p>"The best Halloween store I've ever visited! Amazing selection and fantastic service."</p>
+      <p>"Had a blast at the Halloween event last year! Can't wait for this year's spooky festivities."</p>
+    </div>
+    <div class="image-container">
+      <img src="https://www.w3schools.com/w3images/lights.jpg" alt="Halloween Image"/>
+    </div>
+  </div>
+  
+  <div class="image-grid visible" id="imageGrid">
+    <h2>Halloween Fun Gallery</h2>
+    <div class="grid-container">
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/500" alt="Image 1"></div>
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/400" alt="Image 2"></div>
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/600" alt="Image 3"></div>
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/700" alt="Image 4"></div>
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/500" alt="Image 5"></div>
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/800" alt="Image 6"></div>
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/600" alt="Image 7"></div>
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/900" alt="Image 8"></div>
+      <div class="grid-item visible"><img src="https://picsum.photos/1200/750" alt="Image 9"></div>
+    </div>
+  </div>
+  
+  <footer style="background-color: #333; padding: 20px; color: white; text-align: center;">
+  <div class="footer-content">
+    <p>&copy; 2024 Halloween Fest. All Rights Reserved.</p>
+    <div class="social-icons">
+      <a href="#" style="color: white; margin: 0 10px; text-decoration: none;"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" style="color: white; margin: 0 10px; text-decoration: none;"><i class="fab fa-twitter"></i></a>
+      <a href="#" style="color: white; margin: 0 10px; text-decoration: none;"><i class="fab fa-instagram"></i></a>
+      <a href="#" style="color: white; margin: 0 10px; text-decoration: none;"><i class="fab fa-youtube"></i></a>
+    </div>
+    <p>Made with love for spooky nights!</p>
+  </div>
+</footer>
+</body>
+</html>
